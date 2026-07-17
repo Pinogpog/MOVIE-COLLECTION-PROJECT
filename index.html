@@ -15,28 +15,87 @@
         color-scheme: dark;
       }
 
+      * {
+        scroll-behavior: smooth;
+      }
+
       body {
         margin: 0;
         min-height: 100vh;
-        background: radial-gradient(circle at top, #09131f 0%, #03060d 40%, #000 100%);
+        background: linear-gradient(135deg, #0a0e27 0%, #16213e 25%, #0f1628 50%, #1a1a2e 75%, #16213e 100%);
         color: #edf2ff;
         font-family: "Inter", system-ui, sans-serif;
+        position: relative;
+        overflow-x: hidden;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle at 20% 50%, rgba(79, 206, 255, 0.05) 0%, transparent 50%),
+                    radial-gradient(circle at 80% 80%, rgba(255, 61, 122, 0.05) 0%, transparent 50%);
+        pointer-events: none;
+        z-index: -1;
       }
 
       .navbar {
-        background: rgba(6, 12, 27, 0.95);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        backdrop-filter: blur(16px);
+        background: rgba(6, 12, 27, 0.98);
+        border-bottom: 2px solid transparent;
+        border-image: linear-gradient(90deg, #4fcfff, #ff3d7a, #4cff91, #4fcfff) 1;
+        backdrop-filter: blur(20px);
+        box-shadow: 0 8px 32px rgba(79, 206, 255, 0.1);
+        transition: all 0.3s ease;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      .navbar:hover {
+        box-shadow: 0 12px 48px rgba(79, 206, 255, 0.15);
       }
 
       .navbar-brand {
-        font-weight: 800;
-        letter-spacing: 0.18em;
+        font-weight: 900;
+        letter-spacing: 0.2em;
         color: #ffffff;
+        font-size: 1.8rem;
+        background: linear-gradient(135deg, #4fcfff, #ff3d7a);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        transition: transform 0.3s ease;
+      }
+
+      .navbar-brand:hover {
+        transform: scale(1.1);
       }
 
       .nav-link {
         color: rgba(255, 255, 255, 0.75) !important;
+        position: relative;
+        transition: color 0.3s ease;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+      }
+
+      .nav-link::after {
+        content: "";
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: linear-gradient(90deg, #4fcfff, #ff3d7a);
+        transition: width 0.3s ease;
+      }
+
+      .nav-link:hover::after,
+      .nav-link.active::after {
+        width: 100%;
       }
 
       .nav-link.active,
@@ -46,41 +105,85 @@
 
       .hero {
         padding: 5rem 0 2rem;
+        animation: fadeInDown 0.8s ease-out;
+      }
+
+      @keyframes fadeInDown {
+        from {
+          opacity: 0;
+          transform: translateY(-30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
       }
 
       .hero-title {
         font-size: clamp(2.8rem, 5vw, 4.8rem);
         line-height: 0.98;
         letter-spacing: -0.04em;
+        background: linear-gradient(135deg, #4fcfff 0%, #ff3d7a 50%, #4cff91 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
       }
 
       .hero-text {
         color: rgba(237, 242, 255, 0.78);
         max-width: 680px;
+        font-size: 1.1rem;
+        line-height: 1.8;
       }
 
       .hero-panel {
-        background: rgba(18, 29, 49, 0.9);
-        border: 1px solid rgba(255, 255, 255, 0.07);
+        background: rgba(18, 29, 49, 0.7);
+        border: 2px solid rgba(79, 206, 255, 0.2);
         border-radius: 28px;
-        box-shadow: 0 24px 90px rgba(7, 31, 71, 0.35);
+        box-shadow: 0 24px 90px rgba(7, 31, 71, 0.35), inset 0 1px 2px rgba(255, 255, 255, 0.1);
         padding: 2rem;
+        backdrop-filter: blur(10px);
+        transition: all 0.3s ease;
+      }
+
+      .hero-panel:hover {
+        border-color: rgba(79, 206, 255, 0.4);
+        box-shadow: 0 40px 120px rgba(79, 206, 255, 0.25), inset 0 1px 2px rgba(255, 255, 255, 0.15);
       }
 
       .hero-panel input {
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(255, 255, 255, 0.08);
+        background: rgba(255, 255, 255, 0.08);
+        border: 2px solid rgba(255, 255, 255, 0.1);
         color: #f1f5ff;
+        transition: all 0.3s ease;
       }
 
       .hero-panel input::placeholder {
         color: rgba(241, 245, 255, 0.55);
       }
 
+      .hero-panel input:focus {
+        background: rgba(255, 255, 255, 0.12);
+        border-color: rgba(79, 206, 255, 0.5);
+        box-shadow: 0 0 20px rgba(79, 206, 255, 0.2);
+      }
+
       .movie-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 1.8rem;
+        gap: 2rem;
+        animation: fadeInUp 0.8s ease-out 0.2s backwards;
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
       }
 
       .movie-card {
@@ -95,8 +198,28 @@
         background-origin: padding-box, border-box;
         background-clip: padding-box, border-box;
         box-shadow: 0 30px 80px rgba(10, 30, 60, 0.24);
-        transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease;
+        transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        cursor: pointer;
+        animation: slideInCard 0.6s ease-out backwards;
       }
+
+      @keyframes slideInCard {
+        from {
+          opacity: 0;
+          transform: translateY(50px) scale(0.95);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+
+      .movie-card:nth-child(1) { animation-delay: 0.1s; }
+      .movie-card:nth-child(2) { animation-delay: 0.2s; }
+      .movie-card:nth-child(3) { animation-delay: 0.3s; }
+      .movie-card:nth-child(4) { animation-delay: 0.4s; }
+      .movie-card:nth-child(5) { animation-delay: 0.5s; }
+      .movie-card:nth-child(6) { animation-delay: 0.6s; }
 
       .movie-card::before {
         content: "";
@@ -107,16 +230,27 @@
         filter: blur(18px);
         opacity: 0.55;
         pointer-events: none;
-        transition: opacity 0.3s ease;
+        transition: opacity 0.4s ease;
       }
 
       .movie-card:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 40px 110px rgba(79, 206, 255, 0.22);
+        transform: translateY(-15px) scale(1.05);
+        box-shadow: 0 50px 140px rgba(79, 206, 255, 0.35);
       }
 
       .movie-card:hover::before {
-        opacity: 0.8;
+        opacity: 0.9;
+      }
+
+      .movie-card.hidden {
+        animation: fadeOut 0.3s ease-out forwards;
+      }
+
+      @keyframes fadeOut {
+        to {
+          opacity: 0;
+          display: none;
+        }
       }
 
       .movie-poster {
@@ -124,6 +258,20 @@
         min-height: 420px;
         background-size: cover;
         background-position: center;
+        overflow: hidden;
+      }
+
+      .movie-poster::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, transparent 0%, rgba(5, 9, 21, 0.5) 60%, rgba(5, 9, 21, 0.9) 100%);
+        opacity: 0;
+        transition: opacity 0.4s ease;
+      }
+
+      .movie-card:hover .movie-poster::before {
+        opacity: 1;
       }
 
       .movie-poster::after {
@@ -133,35 +281,90 @@
         background: linear-gradient(180deg, transparent 30%, rgba(5, 9, 21, 0.88) 100%);
       }
 
+      .play-icon {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 60px;
+        height: 60px;
+        background: rgba(255, 255, 255, 0.2);
+        border: 2px solid white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: all 0.4s ease;
+        z-index: 10;
+        cursor: pointer;
+      }
+
+      .play-icon::after {
+        content: "";
+        width: 0;
+        height: 0;
+        border-left: 15px solid white;
+        border-top: 10px solid transparent;
+        border-bottom: 10px solid transparent;
+        margin-left: 3px;
+      }
+
+      .movie-card:hover .play-icon {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.1);
+      }
+
       .movie-tag {
         position: absolute;
         top: 1rem;
         left: 1rem;
-        padding: 0.5rem 1rem;
+        padding: 0.6rem 1.2rem;
         border-radius: 999px;
-        background: rgba(9, 14, 34, 0.92);
+        background: linear-gradient(135deg, rgba(79, 206, 255, 0.2), rgba(255, 61, 122, 0.2));
         color: #cdf2ff;
-        font-weight: 600;
+        font-weight: 700;
         letter-spacing: 0.08em;
-        font-size: 0.8rem;
+        font-size: 0.75rem;
         text-transform: uppercase;
-        backdrop-filter: blur(6px);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(79, 206, 255, 0.3);
+        z-index: 5;
+        transition: all 0.3s ease;
+      }
+
+      .movie-card:hover .movie-tag {
+        background: linear-gradient(135deg, rgba(79, 206, 255, 0.4), rgba(255, 61, 122, 0.4));
+        transform: translateY(-5px);
       }
 
       .movie-details {
         padding: 1.8rem;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
       }
 
       .movie-title {
         margin-bottom: 0.55rem;
         font-size: 1.55rem;
-        font-weight: 700;
+        font-weight: 800;
+        background: linear-gradient(135deg, #ffffff, #9dd5ff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
       }
 
       .movie-meta {
         color: rgba(237, 242, 255, 0.68);
-        margin-bottom: 1.2rem;
+        margin-bottom: 1rem;
         line-height: 1.7;
+        font-size: 0.95rem;
+      }
+
+      .movie-meta:first-of-type {
+        font-weight: 600;
+        color: rgba(79, 206, 255, 0.85);
       }
 
       .movie-card .movie-action {
@@ -174,30 +377,170 @@
         color: #fff;
         text-decoration: none;
         font-weight: 700;
-        transition: transform 0.25s ease;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+        margin-top: auto;
+        text-align: center;
+        width: 100%;
+        justify-content: center;
       }
 
       .movie-card .movie-action:hover {
-        transform: translateY(-2px);
+        transform: translateY(-3px);
+        box-shadow: 0 10px 30px rgba(8, 215, 255, 0.3);
+      }
+
+      .movie-card .movie-action:active {
+        transform: translateY(-1px);
+      }
+
+      .favorite-btn {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: rgba(255, 61, 122, 0.2);
+        border: 2px solid rgba(255, 61, 122, 0.5);
+        color: #ff3d7a;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 1.2rem;
+        z-index: 6;
+        backdrop-filter: blur(10px);
+      }
+
+      .favorite-btn:hover {
+        background: rgba(255, 61, 122, 0.4);
+        transform: scale(1.15);
+      }
+
+      .favorite-btn.active {
+        background: rgba(255, 61, 122, 0.6);
+        color: #ff1744;
+      }
+
+      .filter-section {
+        margin-bottom: 2rem;
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+        animation: fadeInDown 0.6s ease-out 0.1s backwards;
+      }
+
+      .filter-btn {
+        padding: 0.8rem 1.6rem;
+        border-radius: 999px;
+        border: 2px solid rgba(79, 206, 255, 0.3);
+        background: rgba(79, 206, 255, 0.1);
+        color: rgba(255, 255, 255, 0.7);
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        font-size: 0.9rem;
+      }
+
+      .filter-btn:hover {
+        border-color: rgba(79, 206, 255, 0.6);
+        background: rgba(79, 206, 255, 0.2);
+        color: #ffffff;
+      }
+
+      .filter-btn.active {
+        background: linear-gradient(135deg, #7d4cff, #08d7ff);
+        border-color: #08d7ff;
+        color: white;
+      }
+
+      .no-results {
+        text-align: center;
+        padding: 4rem 2rem;
+        color: rgba(237, 242, 255, 0.5);
+      }
+
+      .no-results h3 {
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
       }
 
       .footer {
         text-align: center;
         padding: 2.5rem 0 1rem;
         color: rgba(237, 242, 255, 0.58);
+        background: linear-gradient(180deg, transparent 0%, rgba(79, 206, 255, 0.05) 100%);
+        margin-top: 4rem;
+        border-top: 1px solid rgba(79, 206, 255, 0.1);
       }
 
-      .glow-lines {
-        position: absolute;
-        inset: 0;
-        pointer-events: none;
-        background: radial-gradient(circle at top left, rgba(79, 207, 255, 0.16), transparent 22%),
-          radial-gradient(circle at bottom right, rgba(255, 68, 176, 0.16), transparent 20%);
+      .btn-primary {
+        background: linear-gradient(135deg, #7d4cff, #08d7ff) !important;
+        border: none !important;
+        transition: all 0.3s ease;
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 40px rgba(8, 215, 255, 0.3) !important;
+      }
+
+      .btn-outline-light {
+        border: 2px solid rgba(255, 255, 255, 0.3) !important;
+        transition: all 0.3s ease;
+      }
+
+      .btn-outline-light:hover {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: rgba(79, 206, 255, 0.6) !important;
+        color: rgba(79, 206, 255, 0.9) !important;
+      }
+
+      .modal-content {
+        background: rgba(18, 29, 49, 0.95) !important;
+        border: 2px solid rgba(79, 206, 255, 0.2) !important;
+        border-radius: 20px;
+        box-shadow: 0 40px 120px rgba(7, 31, 71, 0.5) !important;
+      }
+
+      .modal-header {
+        border-bottom: 1px solid rgba(79, 206, 255, 0.1) !important;
+      }
+
+      .modal-body {
+        color: rgba(237, 242, 255, 0.85);
+      }
+
+      .close,
+      .btn-close {
+        color: rgba(255, 255, 255, 0.5);
+        transition: all 0.3s ease;
+      }
+
+      .close:hover,
+      .btn-close:hover {
+        color: #ffffff;
       }
 
       @media (max-width: 767px) {
         .hero {
           padding-top: 3rem;
+        }
+
+        .hero-title {
+          font-size: 2rem;
+        }
+
+        .movie-grid {
+          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+          gap: 1.5rem;
+        }
+
+        .filter-section {
+          justify-content: center;
         }
       }
     </style>
@@ -280,41 +623,119 @@
           <div class="text-secondary">Explore modern cinema design with cinematic details and glowing highlights.</div>
         </div>
 
-        <div class="movie-grid">
-          <article class="movie-card">
+        <div class="filter-section">
+          <button class="filter-btn active" data-filter="all">All Movies</button>
+          <button class="filter-btn" data-filter="action">Action</button>
+          <button class="filter-btn" data-filter="comedy">Comedy</button>
+          <button class="filter-btn" data-filter="thriller">Thriller</button>
+          <button class="filter-btn" data-filter="adventure">Adventure</button>
+          <button class="filter-btn" data-filter="animated">Animated</button>
+          <button class="filter-btn" data-filter="family">Family</button>
+          <button class="filter-btn" data-filter="drama">Drama</button>
+        </div>
+
+        <div class="movie-grid" id="movieGrid">
+          <article class="movie-card" data-genres="animated, comedy, family" data-link="https://www.youtube.com/results?search_query=minions+monsters+2024">
             <div class="movie-poster" style="background-image: url('img/minions.jpg');">
+              <button class="favorite-btn" data-title="Minions Monster">♡</button>
+              <div class="play-icon"></div>
               <span class="movie-tag">Minions</span>
             </div>
             <div class="movie-details">
               <h3 class="movie-title">Minions Monster</h3>
               <p class="movie-meta">2026 · Animated · Comedy · 1h 45m</p>
               <p class="movie-meta">Minions & Monsters is a 2026 American animated comedy film directed by Pierre Coffin, who co-wrote the screenplay with Brian Lynch. Produced by Illumination.</p>
-              <a class="movie-action" href="https://en.wikipedia.org/wiki/Minions_%26_Monsters">Learn more</a>
+              <button class="movie-action" data-title="Minions Monster">Learn more</button>
             </div>
           </article>
 
-          <article class="movie-card">
+          <article class="movie-card" data-genres="action, thriller" data-link="https://www.youtube.com/results?search_query=joker+2019+full+movie">
            <div class="movie-poster" style="background-image: url('img/joker.jpg');">
+            <button class="favorite-btn" data-title="Joker">♡</button>
+            <div class="play-icon"></div>
             </div>
             <div class="movie-details">
               <h3 class="movie-title">Joker</h3>
               <p class="movie-meta">2019 · Action · Thriller · 2h 10m</p>
               <p class="movie-meta">American psychological thriller film directed by Todd Phillips from a screenplay he co-wrote with Scott Silver. </p>
-              <a class="movie-action" href="https://en.wikipedia.org/wiki/Joker_(2019_film)">View details</a>
+              <button class="movie-action" data-title="Joker">View details</button>
             </div>
           </article>
 
-          <article class="movie-card">
+          <article class="movie-card" data-genres="animated, comedy" data-link="https://www.youtube.com/results?search_query=angry+birds+movie+2016">
              <div class="movie-poster" style="background-image: url('img/angry\ birds.jpg');">
+              <button class="favorite-btn" data-title="Angry Birds">♡</button>
+              <div class="play-icon"></div>
               <span class="movie-tag">Classic</span>
             </div>
             <div class="movie-details">
               <h3 class="movie-title">Angry birds</h3>
               <p class="movie-meta">2016 · Cartoon · Mystery · 1h 58m</p>
               <p class="movie-meta">A cinematic tale of midnight journeys, unexpected reunions, and beautiful lighting effects.</p>
-              <a class="movie-action" href="#">View details</a>
+              <button class="movie-action" data-title="Angry Birds">View details</button>
             </div>
           </article>
+
+          <article class="movie-card" data-genres="adventure, action" data-link="https://www.youtube.com/results?search_query=jurassic+park+1993+full+movie">
+            <div class="movie-poster" style="background-image: url('img/jurassic.jpg');">
+              <button class="favorite-btn" data-title="Jurassic Park">♡</button>
+              <div class="play-icon"></div>
+              <span class="movie-tag">Adventure</span>
+            </div>
+            <div class="movie-details">
+              <h3 class="movie-title">Jurassic Park</h3>
+              <p class="movie-meta">1993 · Adventure · Sci-Fi · 2h 7m</p>
+              <p class="movie-meta">A visionary filmmaker creates a dinosaur theme park with the help of a genetic engineer and a mathematician.</p>
+              <button class="movie-action" data-title="Jurassic Park">View details</button>
+            </div>
+          </article>
+
+          <article class="movie-card" data-genres="thriller, adventure, action" data-link="https://www.youtube.com/results?search_query=jaws+1975+full+movie">
+            <div class="movie-poster" style="background-image: url('img/the\ jaws.jpg');">
+              <button class="favorite-btn" data-title="Jaws">♡</button>
+              <div class="play-icon"></div>
+              <span class="movie-tag">Thriller</span>
+            </div>
+            <div class="movie-details">
+              <h3 class="movie-title">Jaws</h3>
+              <p class="movie-meta">1975 · Thriller · Adventure · 2h 4m</p>
+              <p class="movie-meta">When a giant great white shark begins to menace the small island community of Amity, a local police chief must team up to stop it.</p>
+              <button class="movie-action" data-title="Jaws">View details</button>
+            </div>
+          </article>
+
+          <article class="movie-card" data-genres="family, comedy, animated" data-link="https://www.youtube.com/results?search_query=tonton+2024+movie">
+            <div class="movie-poster" style="background-image: url('img/tonton.jpg');">
+              <button class="favorite-btn" data-title="Tonton">♡</button>
+              <div class="play-icon"></div>
+              <span class="movie-tag">Family</span>
+            </div>
+            <div class="movie-details">
+              <h3 class="movie-title">Tonton</h3>
+              <p class="movie-meta">2024 · Family · Comedy · 1h 50m</p>
+              <p class="movie-meta">A heartwarming tale of family bonds and unexpected adventures in a vibrant animated world.</p>
+              <button class="movie-action" data-title="Tonton">View details</button>
+            </div>
+          </article>
+
+          <article class="movie-card" data-genres="comedy, drama, action" data-link="https://www.youtube.com/results?search_query=praybeyt+benjamin+2011">
+            <div class="movie-poster" style="background-image: url('img/Praybeytbenjofficial.jpg');">
+              <button class="favorite-btn" data-title="Praybeyt Benjamin">♡</button>
+              <div class="play-icon"></div>
+              <span class="movie-tag">Drama</span>
+            </div>
+            <div class="movie-details">
+              <h3 class="movie-title">Praybeyt Benjamin</h3>
+              <p class="movie-meta">2011 · Comedy · Drama · 1h 45m</p>
+              <p class="movie-meta">An action-packed comedy adventure following an unexpected hero on an unforgettable journey.</p>
+              <button class="movie-action" data-title="Praybeyt Benjamin">View details</button>
+            </div>
+          </article>
+        </div>
+
+        <div class="no-results" id="noResults" style="display: none;">
+          <h3>No movies found</h3>
+          <p>Try adjusting your filters or search terms</p>
         </div>
       </section>
 
@@ -373,5 +794,225 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-7U1S1BvF5N2GpKcFJvpaulYCt8PSYcA5d5KIeL88DM2uD2rbbW6J8cZD3G0/1sWZ"
       crossorigin="anonymous"></script>
+    
+    <script>
+      // Store favorites in localStorage
+      const favorites = new Set(JSON.parse(localStorage.getItem('movieFavorites') || '[]'));
+      
+      let currentFilter = 'all';
+      let currentSearch = '';
+
+      // Initialize favorites on page load
+      document.addEventListener('DOMContentLoaded', function() {
+        updateFavoritesDisplay();
+        setupSearch();
+        setupFilters();
+        setupActionButtons();
+        setupFavoriteButtons();
+        setupPlayButtons();
+        setupNavigation();
+      });
+
+      // Enhanced search functionality
+      function setupSearch() {
+        const searchInput = document.querySelector('input[type="search"]');
+        
+        searchInput.addEventListener('input', function() {
+          currentSearch = this.value.toLowerCase().trim();
+          filterMovies();
+        });
+      }
+
+      // Filter functionality by genre
+      function setupFilters() {
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        
+        filterButtons.forEach(btn => {
+          btn.addEventListener('click', function() {
+            filterButtons.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            currentFilter = this.dataset.filter;
+            filterMovies();
+          });
+        });
+      }
+
+      // Filter movies based on genre and search
+      function filterMovies() {
+        const movieCards = document.querySelectorAll('.movie-card');
+        const noResults = document.getElementById('noResults');
+        let visibleCount = 0;
+
+        movieCards.forEach(card => {
+          const titleElement = card.querySelector('.movie-title');
+          const movieTitle = titleElement.textContent.toLowerCase();
+          const genres = card.dataset.genres ? card.dataset.genres.split(',').map(g => g.trim()) : [];
+
+          // Check search match
+          const searchMatch = currentSearch === '' || movieTitle.includes(currentSearch);
+
+          // Check filter match
+          const filterMatch = currentFilter === 'all' || genres.includes(currentFilter);
+
+          if (searchMatch && filterMatch) {
+            card.style.display = '';
+            card.classList.remove('hidden');
+            visibleCount++;
+          } else {
+            card.classList.add('hidden');
+            card.style.display = 'none';
+          }
+        });
+
+        // Show no results message
+        noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+      }
+
+      // Setup action buttons for movie details
+      function setupActionButtons() {
+        const actionButtons = document.querySelectorAll('.movie-action');
+        
+        actionButtons.forEach(btn => {
+          btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const movieTitle = this.dataset.title;
+            const card = this.closest('.movie-card');
+            const details = {
+              title: card.querySelector('.movie-title').textContent,
+              meta: card.querySelector('.movie-meta').textContent,
+              description: card.querySelectorAll('.movie-meta')[1].textContent,
+              image: card.querySelector('.movie-poster').style.backgroundImage
+            };
+            
+            showMovieModal(details);
+          });
+        });
+      }
+
+      // Show movie details modal
+      function showMovieModal(details) {
+        const modalHTML = `
+          <div class="modal fade" id="movieModal" tabindex="-1">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">${details.title}</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                  <div style="margin-bottom: 1.5rem; border-radius: 12px; overflow: hidden; height: 300px;">
+                    <img src="" alt="${details.title}" style="width: 100%; height: 100%; object-fit: cover;" />
+                  </div>
+                  <p style="margin-bottom: 1rem; color: rgba(79, 206, 255, 0.9); font-weight: 600;">${details.meta}</p>
+                  <p style="line-height: 1.8; color: rgba(237, 242, 255, 0.8);">${details.description}</p>
+                </div>
+                <div class="modal-footer" style="border-top: 1px solid rgba(79, 206, 255, 0.1);">
+                  <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary">Add to Watchlist</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+
+        // Remove existing modal if any
+        const existingModal = document.getElementById('movieModal');
+        if (existingModal) existingModal.remove();
+
+        // Add new modal to body
+        document.body.insertAdjacentHTML('beforeend', modalHTML);
+
+        // Show modal
+        const modal = new bootstrap.Modal(document.getElementById('movieModal'));
+        modal.show();
+
+        // Clean up after modal is hidden
+        document.getElementById('movieModal').addEventListener('hidden.bs.modal', function() {
+          this.remove();
+        });
+      }
+
+      // Setup favorite buttons
+      function setupFavoriteButtons() {
+        const favoriteButtons = document.querySelectorAll('.favorite-btn');
+        
+        favoriteButtons.forEach(btn => {
+          btn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const movieTitle = this.dataset.title;
+            
+            if (favorites.has(movieTitle)) {
+              favorites.delete(movieTitle);
+              this.classList.remove('active');
+            } else {
+              favorites.add(movieTitle);
+              this.classList.add('active');
+            }
+
+            // Save to localStorage
+            localStorage.setItem('movieFavorites', JSON.stringify([...favorites]));
+            updateFavoritesDisplay();
+          });
+        });
+      }
+
+      // Update favorites display
+      function updateFavoritesDisplay() {
+        const favoriteButtons = document.querySelectorAll('.favorite-btn');
+        favoriteButtons.forEach(btn => {
+          const title = btn.dataset.title;
+          if (favorites.has(title)) {
+            btn.classList.add('active');
+            btn.textContent = '❤';
+          } else {
+            btn.classList.remove('active');
+            btn.textContent = '♡';
+          }
+        });
+      }
+
+      // Setup play button functionality
+      function setupPlayButtons() {
+        const playIcons = document.querySelectorAll('.play-icon');
+        
+        playIcons.forEach(playIcon => {
+          playIcon.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const movieCard = this.closest('.movie-card');
+            const link = movieCard.dataset.link;
+            
+            if (link) {
+              window.open(link, '_blank');
+            }
+          });
+
+          // Add cursor pointer on hover
+          playIcon.style.cursor = 'pointer';
+        });
+      }
+
+      // Smooth scroll for navigation
+      function setupNavigation() {
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+          anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+              target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+              });
+            }
+          });
+        });
+      }
+
+      // Explore button functionality
+      document.querySelector('.navbar-collapse')?.parentElement.addEventListener('click', function(e) {
+        if (e.target.textContent.includes('Explore')) {
+          document.querySelector('#collection').scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    </script>
   </body>
 </html>
